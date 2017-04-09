@@ -33,17 +33,18 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Ad(R.drawable.third, "周杰伦最新单曲：英雄"));
         list.add(new Ad(R.drawable.fourth, "9积分抢票"));
         list.add(new Ad(R.drawable.five, "我就是喜欢那只萌宠"));
+
+        viewPager.setAdapter(new MyPagerAdapter());
     }
 
     class MyPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
-            return 0;
+            return list.size();
         }
 
         /**
-         *
          * true: don't re-create, use cache  false: to create
          */
         @Override
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         *
          * Similar to BaseAdapter's getView
          * Set data to view
          */
@@ -60,19 +60,20 @@ public class MainActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             View view = View.inflate(MainActivity.this, R.layout.adapter_ad, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.image);
-            return super.instantiateItem(container, position);
+            imageView.setImageResource(list.get(position).getIconResId());
+
+            container.addView(view);
+            return view;
         }
 
-
         /**
-         *
          * @param container viewPager self
-         * @param position for destroy
+         * @param position  for destroy
          * @param object
          */
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            super.destroyItem(container, position, object);
+//            super.destroyItem(container, position, object);
             container.removeView((View) object);
         }
     }
