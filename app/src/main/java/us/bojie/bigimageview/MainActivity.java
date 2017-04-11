@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                updateIntro();
+                updateIntroAndDot();
             }
 
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         initDots();
         viewPager.setAdapter(new MyPagerAdapter());
 
-        updateIntro();
+        updateIntroAndDot();
     }
 
     private void initDots() {
@@ -82,9 +82,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Update text
-    private void updateIntro() {
+    private void updateIntroAndDot() {
         int currentPage = viewPager.getCurrentItem();
         tvIntro.setText(list.get(currentPage).getIntro());
+
+        for (int i = 0; i < dotLayout.getChildCount(); i++) {
+            dotLayout.getChildAt(i).setEnabled(i == currentPage);
+        }
     }
 
     class MyPagerAdapter extends PagerAdapter {
