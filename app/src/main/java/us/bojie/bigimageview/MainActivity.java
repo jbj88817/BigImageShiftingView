@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < list.size(); i++) {
             View view = new View(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(16, 16);
+            if (i != 0) {
+                params.leftMargin = 8;
+            }
             view.setLayoutParams(params);
             view.setBackgroundResource(R.drawable.selector_dot);
             dotLayout.addView(view); //init dot
