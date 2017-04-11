@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         initDots();
         viewPager.setAdapter(new MyPagerAdapter());
 
+        int centerValue = Integer.MAX_VALUE / 2;
+        int offsetValue = centerValue % list.size();
+        viewPager.setCurrentItem(centerValue - offsetValue);
+
         updateIntroAndDot();
     }
 
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Update text
     private void updateIntroAndDot() {
-        int currentPage = viewPager.getCurrentItem();
+        int currentPage = viewPager.getCurrentItem() % list.size();
         tvIntro.setText(list.get(currentPage).getIntro());
 
         for (int i = 0; i < dotLayout.getChildCount(); i++) {
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return list.size();
+            return Integer.MAX_VALUE;
         }
 
         /**
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             View view = View.inflate(MainActivity.this, R.layout.adapter_ad, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.image);
-            imageView.setImageResource(list.get(position).getIconResId());
+            imageView.setImageResource(list.get(position % list.size()).getIconResId());
 
             container.addView(view);
             return view;
