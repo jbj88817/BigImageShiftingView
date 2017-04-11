@@ -23,14 +23,18 @@
         android:padding="8dp">
 
         <TextView
+            android:id="@+id/tv_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="texttext"
+            android:ellipsize="end"
+            android:minLines="1"
             android:textColor="#ffffff"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:text="texttext"/>
 
         <LinearLayout
+            android:id="@+id/dot_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

@@ -7,25 +7,50 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
+    private TextView tvIntro;
     private ArrayList<Ad> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        initListener();
         initData();
     }
+
 
     private void initView() {
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tvIntro = (TextView) findViewById(R.id.tv_intro);
     }
+
+    private void initListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateIntro();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
 
     private void initData() {
         list.add(new Ad(R.drawable.first, "李荣浩：我的爱情不在歌里"));
@@ -35,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Ad(R.drawable.five, "我就是喜欢那只萌宠"));
 
         viewPager.setAdapter(new MyPagerAdapter());
+
+        updateIntro();
+    }
+
+    private void updateIntro() {
+        int currentPage = viewPager.getCurrentItem();
+        tvIntro.setText(list.get(currentPage).getIntro());
     }
 
     class MyPagerAdapter extends PagerAdapter {
@@ -76,5 +108,11 @@ public class MainActivity extends AppCompatActivity {
 //            super.destroyItem(container, position, object);
             container.removeView((View) object);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewPager.clearOnPageChangeListeners();
+        super.onDestroy();
     }
 }
