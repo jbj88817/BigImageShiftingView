@@ -1,5 +1,7 @@
 package us.bojie.bigimageview;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvIntro;
     private LinearLayout dotLayout;
     private ArrayList<Ad> list = new ArrayList<>();
+    private Handler handle = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            handle.sendEmptyMessageDelayed(0, 4000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(centerValue - offsetValue);
 
         updateIntroAndDot();
+
+        handle.sendEmptyMessageDelayed(0, 4000);
     }
 
     private void initDots() {
