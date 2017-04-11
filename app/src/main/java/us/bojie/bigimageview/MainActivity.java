@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TextView tvIntro;
+    private LinearLayout dotLayout;
     private ArrayList<Ad> list = new ArrayList<>();
 
     @Override
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tvIntro = (TextView) findViewById(R.id.tv_intro);
+        dotLayout = (LinearLayout) findViewById(R.id.dot_layout);
     }
 
     private void initListener() {
@@ -59,11 +62,23 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Ad(R.drawable.fourth, "9积分抢票"));
         list.add(new Ad(R.drawable.five, "我就是喜欢那只萌宠"));
 
+        initDots();
         viewPager.setAdapter(new MyPagerAdapter());
 
         updateIntro();
     }
 
+    private void initDots() {
+        for (int i = 0; i < list.size(); i++) {
+            View view = new View(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(16, 16);
+            view.setLayoutParams(params);
+            view.setBackgroundResource(R.drawable.selector_dot);
+            dotLayout.addView(view); //init dot
+        }
+    }
+
+    // Update text
     private void updateIntro() {
         int currentPage = viewPager.getCurrentItem();
         tvIntro.setText(list.get(currentPage).getIntro());
